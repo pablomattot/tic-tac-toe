@@ -1,5 +1,5 @@
 const gameboard = (function () {
-    const gameboard = new Array(9);
+    let gameboard = new Array(9);
 
     function getGameboard() {
         return { gameboard };
@@ -7,21 +7,17 @@ const gameboard = (function () {
 
     function setCellValue(val, index) {
         gameboard[index] = val;
-        console.log(gameboard);
     }
 
-    return { getGameboard, setCellValue }
+    function resetGameboard() {
+        gameboard = Array(9);
+    }
+
+    return { getGameboard, setCellValue, resetGameboard }
 })();
 
-const player = () => {
-    let marker;
-    const setMarker = () => marker = prompt("marker?");
-    const getMarker = () => {
-        if (marker) {
-            return marker
-        }
-    };
-    return { setMarker, getMarker };
+const player = (name, marker) => {
+    return { name, marker };
 }
 
 const gameController = (function () {
@@ -32,16 +28,22 @@ const gameController = (function () {
     // bind events
     board.addEventListener("click", addMarker);
 
-    const playerOne = player();
-    playerOne.setMarker();
+    // create players
+    const playerOne = player("pablo", "X");
+    const playerTwo = player("peble", "O");
+    let currentPlayer;
 
-    function render(e,index) {
-        e.target.textContent = gameboard.getGameboard().gameboard[index]
+    function render(index) {
+        cellArray[index].textContent = gameboard.getGameboard().gameboard[index];
     }
 
     function addMarker(e) {
         const cellIndex = cellArray.indexOf(e.target);
-        gameboard.setCellValue(playerOne.getMarker(), cellIndex);
-        render(e, cellIndex);
+        gameboard.setCellValue(setCurrentPlayer().marker, cellIndex);
+        render(cellIndex);
+    }
+
+    function setCurrentPlayer() {
+        return currentPlayer === playerOne ? currentPlayer = playerTwo : currentPlayer = playerOne;
     }
 })();

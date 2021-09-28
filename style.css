@@ -15,7 +15,8 @@ main {
     height: 50vw;
     width: 50vw;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
     border-right: 1px solid #232323;
     border-bottom: 1px solid #232323;
 }
@@ -26,4 +27,8 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.cell:hover {
+    cursor: pointer;
 }
