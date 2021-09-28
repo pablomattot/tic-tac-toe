@@ -1,46 +1,48 @@
+const player = (name, marker) => {
+    return { name, marker };
+}
+
 const gameboard = (function () {
+
     let gameboard = new Array(9);
 
+    // cache DOM
+    const board = document.querySelector(".gameboard");
+    const cellArray = Array.from(board.children);
+
+    function render() {
+        for (let i = 0; i <= cellArray.length - 1; i++) {
+            cellArray[i].textContent = gameboard[i];
+        }
+    }
+
     function getGameboard() {
-        return { gameboard };
+        return { board };
     }
 
     function setCellValue(val, index) {
         gameboard[index] = val;
     }
 
-    function resetGameboard() {
-        gameboard = Array(9);
-    }
-
-    return { getGameboard, setCellValue, resetGameboard }
+    return { getGameboard, setCellValue, render }
 })();
 
-const player = (name, marker) => {
-    return { name, marker };
-}
-
 const gameController = (function () {
-    // cache DOM
-    const board = document.querySelector(".gameboard");
-    const cellArray = Array.from(board.children);
+    const cellArray = Array.from(gameboard.getGameboard().board.children);
 
     // bind events
-    board.addEventListener("click", addMarker);
+    gameboard.getGameboard().board.addEventListener("click", addMarker);
 
     // create players
     const playerOne = player("pablo", "X");
     const playerTwo = player("peble", "O");
     let currentPlayer;
 
-    function render(index) {
-        cellArray[index].textContent = gameboard.getGameboard().gameboard[index];
-    }
-
     function addMarker(e) {
-        const cellIndex = cellArray.indexOf(e.target);
-        gameboard.setCellValue(setCurrentPlayer().marker, cellIndex);
-        render(cellIndex);
+        if (!e.target.textContent) {
+            gameboard.setCellValue(setCurrentPlayer().marker, cellArray.indexOf(e.target));
+            gameboard.render();
+        }
     }
 
     function setCurrentPlayer() {
