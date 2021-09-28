@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameboard {
+    height: 50vw;
+    width: 50vw;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-right: 1px solid #232323;
+    border-bottom: 1px solid #232323;
+}
+
+.cell {
+    border-top: 1px solid #232323;
+    border-left: 1px solid #232323;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
