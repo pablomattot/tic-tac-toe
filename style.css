@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+body {
+    background: radial-gradient(#1f3756, #141539);
+}
+
 main {
     height: 100vh;
     display: flex;
@@ -13,24 +17,48 @@ main {
     align-items: center;
 }
 
+#winner {
+    color: #FFF;
+    font-size: 34px;
+    font-weight: 900;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .gameboard {
     height: 50vw;
     width: 50vw;
     display: grid;
+    grid-gap: 5px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: repeat(3, minmax(0, 1fr));
-    border-right: 1px solid #232323;
-    border-bottom: 1px solid #232323;
 }
 
 .cell {
-    border-top: 1px solid #232323;
-    border-left: 1px solid #232323;
+    border: 5px solid #FFF;
+    border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all ease-out .3s;
+    color: #141539;
 }
 
 .cell:hover {
     cursor: pointer;
+    background: #FFF !important;
+}
+
+#reset {
+    background: none;
+    border: 1px solid #FFF;
+    border-radius: 5px;
+    padding: 1em 2em;
+    color: #FFF;
+    transition: all ease-out .3s;
+}
+
+#reset:hover {
+    cursor: pointer;
+    color: #141539;
+    background: #FFF;
 }

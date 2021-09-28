@@ -26,6 +26,7 @@ const gameboard = (function () {
 
     function resetBoard() {
         gameboard = Array(9);
+        cellArray.forEach(cell => cell.style.background = "none");
         render();
     }
 
@@ -47,8 +48,8 @@ const gameController = (function () {
     });
 
     // create players
-    const playerOne = player("pablo", "X");
-    const playerTwo = player("peble", "O");
+    const playerOne = player("Player One", "X");
+    const playerTwo = player("Player Two", "O");
     let currentPlayer;
     let winner = false;
 
@@ -57,6 +58,8 @@ const gameController = (function () {
             gameboard.setCellValue(setCurrentPlayer().marker, cellArray.indexOf(e.target));
             gameboard.render();
             checkWinner();
+            e.target.style.backgroundColor = "#FFF";
+            console.log(e.target);
         }
     }
 
