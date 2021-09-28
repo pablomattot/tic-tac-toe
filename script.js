@@ -17,35 +17,69 @@ const gameboard = (function () {
     }
 
     function getGameboard() {
-        return { board };
+        return { gameboard, board };
     }
 
     function setCellValue(val, index) {
         gameboard[index] = val;
     }
 
-    return { getGameboard, setCellValue, render }
+    function resetBoard() {
+        gameboard = Array(9);
+        render();
+    }
+
+    return { getGameboard, setCellValue, render, resetBoard }
 })();
 
 const gameController = (function () {
     const cellArray = Array.from(gameboard.getGameboard().board.children);
+    const resetBtn = document.querySelector("#reset");
 
     // bind events
     gameboard.getGameboard().board.addEventListener("click", addMarker);
+    resetBtn.addEventListener("click", () => {
+        gameboard.resetBoard();
+        winner = false;
+    });
 
     // create players
     const playerOne = player("pablo", "X");
     const playerTwo = player("peble", "O");
     let currentPlayer;
+    let winner = false;
 
     function addMarker(e) {
-        if (!e.target.textContent) {
+        if (!e.target.textContent && !winner) {
             gameboard.setCellValue(setCurrentPlayer().marker, cellArray.indexOf(e.target));
             gameboard.render();
+            checkWinner();
         }
     }
 
     function setCurrentPlayer() {
         return currentPlayer === playerOne ? currentPlayer = playerTwo : currentPlayer = playerOne;
+    }
+
+    const winConditions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+    ];
+
+    function checkWinner() {
+        winConditions.forEach((item) => {
+            if (gameboard.getGameboard().gameboard[item[0]] === currentPlayer.marker
+                && gameboard.getGameboard().gameboard[item[1]] === currentPlayer.marker
+                && gameboard.getGameboard().gameboard[item[2]] === currentPlayer.marker) {
+                console.log(`${currentPlayer.name} won!`);
+                winner = true;
+            }
+        })
     }
 })();
