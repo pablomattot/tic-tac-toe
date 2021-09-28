@@ -33,14 +33,17 @@ const gameboard = (function () {
 })();
 
 const gameController = (function () {
+    // cache DOM
     const cellArray = Array.from(gameboard.getGameboard().board.children);
     const resetBtn = document.querySelector("#reset");
+    const winnerDisplay = document.querySelector("#winner");
 
     // bind events
     gameboard.getGameboard().board.addEventListener("click", addMarker);
     resetBtn.addEventListener("click", () => {
         gameboard.resetBoard();
         winner = false;
+        winnerDisplay.textContent = "";
     });
 
     // create players
@@ -77,7 +80,7 @@ const gameController = (function () {
             if (gameboard.getGameboard().gameboard[item[0]] === currentPlayer.marker
                 && gameboard.getGameboard().gameboard[item[1]] === currentPlayer.marker
                 && gameboard.getGameboard().gameboard[item[2]] === currentPlayer.marker) {
-                console.log(`${currentPlayer.name} won!`);
+                winnerDisplay.textContent = `${currentPlayer.name} won!`;
                 winner = true;
             }
         })
